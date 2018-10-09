@@ -693,8 +693,9 @@ two-handed
 fj &lt;- full_join(medieval_weapons, stun_bonus, by = &quot;wielding&quot;) 
 kable(
   list(ij, fj),
-  col.names = c(&quot;Weapon&quot;, &quot;Attack Type&quot;, &quot;Wielding Type&quot;, &quot;Damage (HP)&quot;, &quot;Chance to Stun&quot;, &quot;Stun Damage (HP)&quot;))</code></pre>
-<table class="kable_wrapper">
+  col.names = c(&quot;Weapon&quot;, &quot;Attack Type&quot;, &quot;Wielding Type&quot;, &quot;Damage (HP)&quot;, &quot;Chance to Stun&quot;, &quot;Stun Damage (HP)&quot;)) %&gt;% 
+  kable_styling(font_size = 15)</code></pre>
+<table class="kable_wrapper table" style="font-size: 15px; margin-left: auto; margin-right: auto;">
 <tbody>
 <tr>
 <td>
@@ -940,8 +941,9 @@ two-handed
 fj &lt;- full_join(stun_bonus, medieval_weapons, by = &quot;wielding&quot;) 
 kable(
   list(ij, fj),
-  col.names = c(&quot;Weapon&quot;, &quot;Attack Type&quot;, &quot;Wielding Type&quot;, &quot;Damage (HP)&quot;, &quot;Chance to Stun&quot;, &quot;Stun Damage (HP)&quot;))</code></pre>
-<table class="kable_wrapper">
+  col.names = c(&quot;Weapon&quot;, &quot;Attack Type&quot;, &quot;Wielding Type&quot;, &quot;Damage (HP)&quot;, &quot;Chance to Stun&quot;, &quot;Stun Damage (HP)&quot;)) %&gt;% 
+  kable_styling(font_size = 15)</code></pre>
+<table class="kable_wrapper table" style="font-size: 15px; margin-left: auto; margin-right: auto;">
 <tbody>
 <tr>
 <td>
@@ -1197,8 +1199,9 @@ melee
 aj &lt;- anti_join(medieval_weapons, stun_bonus, by = &quot;wielding&quot;) 
 kable(
   list(sj, aj),
-  col.names = c(&quot;Weapon&quot;, &quot;Attack Type&quot;, &quot;Wielding Type&quot;, &quot;Damage (HP)&quot;))</code></pre>
-<table class="kable_wrapper">
+  col.names = c(&quot;Weapon&quot;, &quot;Attack Type&quot;, &quot;Wielding Type&quot;, &quot;Damage (HP)&quot;)) %&gt;% 
+  kable_styling(font_size = 15)</code></pre>
+<table class="kable_wrapper table" style="font-size: 15px; margin-left: auto; margin-right: auto;">
 <tbody>
 <tr>
 <td>
@@ -1351,8 +1354,9 @@ one-handed
 aj2 &lt;- anti_join(stun_bonus, medieval_weapons,  by = &quot;wielding&quot;) 
 kable(
   list(sj2, aj2),
-  col.names = c(&quot;Weapon&quot;, &quot;Chance to Stun&quot;, &quot;Stun Damage (HP)&quot;))</code></pre>
-<table class="kable_wrapper">
+  col.names = c(&quot;Weapon&quot;, &quot;Chance to Stun&quot;, &quot;Stun Damage (HP)&quot;)) %&gt;% 
+  kable_styling(font_size = 15)</code></pre>
+<table class="kable_wrapper table" style="font-size: 15px; margin-left: auto; margin-right: auto;">
 <tbody>
 <tr>
 <td>

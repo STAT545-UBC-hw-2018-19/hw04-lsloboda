@@ -136,13 +136,15 @@ ij <- inner_join(medieval_weapons, stun_bonus, by = "wielding")
 fj <- full_join(medieval_weapons, stun_bonus, by = "wielding") 
 kable(
   list(ij, fj),
-  col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun", "Stun Damage (HP)"))
+  col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun", "Stun Damage (HP)")) %>% 
+  kable_styling(font_size = 15)
 
 ij <- inner_join(stun_bonus, medieval_weapons,  by = "wielding") 
 fj <- full_join(stun_bonus, medieval_weapons, by = "wielding") 
 kable(
   list(ij, fj),
-  col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun", "Stun Damage (HP)"))
+  col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun", "Stun Damage (HP)")) %>% 
+  kable_styling(font_size = 15)
 
 ```
 
@@ -160,7 +162,8 @@ sj <- semi_join(medieval_weapons, stun_bonus, by = "wielding")
 aj <- anti_join(medieval_weapons, stun_bonus, by = "wielding") 
 kable(
   list(sj, aj),
-  col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)"))
+  col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)")) %>% 
+  kable_styling(font_size = 15)
 ```
 
 
@@ -171,7 +174,8 @@ sj2 <- semi_join(stun_bonus, medieval_weapons,  by = "wielding")
 aj2 <- anti_join(stun_bonus, medieval_weapons,  by = "wielding") 
 kable(
   list(sj2, aj2),
-  col.names = c("Weapon", "Chance to Stun", "Stun Damage (HP)"))
+  col.names = c("Weapon", "Chance to Stun", "Stun Damage (HP)")) %>% 
+  kable_styling(font_size = 15)
 ```
 
 Switching the order of the data set clearly affects the output of semi and anti joins. In both tables above, we observe that only the columns from the new *x* data set (previously the *y* data set) are present. Similarly to the previous example, the semi join table shows the same rows that were identified as matching rows when we used inner join. The anti join table shows all of the remaining rows, of which there are none, so there is no data present.

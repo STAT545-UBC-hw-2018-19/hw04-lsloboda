@@ -367,10 +367,11 @@ ij <- inner_join(medieval_weapons, stun_bonus, by = "wielding")
 fj <- full_join(medieval_weapons, stun_bonus, by = "wielding") 
 kable(
   list(ij, fj),
-  col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun", "Stun Damage (HP)"))
+  col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun", "Stun Damage (HP)")) %>% 
+  kable_styling(font_size = 15)
 ```
 
-<table class="kable_wrapper">
+<table class="kable_wrapper table" style="font-size: 15px; margin-left: auto; margin-right: auto;">
 <tbody>
   <tr>
    <td> 
@@ -490,10 +491,11 @@ ij <- inner_join(stun_bonus, medieval_weapons,  by = "wielding")
 fj <- full_join(stun_bonus, medieval_weapons, by = "wielding") 
 kable(
   list(ij, fj),
-  col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun", "Stun Damage (HP)"))
+  col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun", "Stun Damage (HP)")) %>% 
+  kable_styling(font_size = 15)
 ```
 
-<table class="kable_wrapper">
+<table class="kable_wrapper table" style="font-size: 15px; margin-left: auto; margin-right: auto;">
 <tbody>
   <tr>
    <td> 
@@ -623,10 +625,11 @@ sj <- semi_join(medieval_weapons, stun_bonus, by = "wielding")
 aj <- anti_join(medieval_weapons, stun_bonus, by = "wielding") 
 kable(
   list(sj, aj),
-  col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)"))
+  col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)")) %>% 
+  kable_styling(font_size = 15)
 ```
 
-<table class="kable_wrapper">
+<table class="kable_wrapper table" style="font-size: 15px; margin-left: auto; margin-right: auto;">
 <tbody>
   <tr>
    <td> 
@@ -716,10 +719,11 @@ sj2 <- semi_join(stun_bonus, medieval_weapons,  by = "wielding")
 aj2 <- anti_join(stun_bonus, medieval_weapons,  by = "wielding") 
 kable(
   list(sj2, aj2),
-  col.names = c("Weapon", "Chance to Stun", "Stun Damage (HP)"))
+  col.names = c("Weapon", "Chance to Stun", "Stun Damage (HP)")) %>% 
+  kable_styling(font_size = 15)
 ```
 
-<table class="kable_wrapper">
+<table class="kable_wrapper table" style="font-size: 15px; margin-left: auto; margin-right: auto;">
 <tbody>
   <tr>
    <td> 
