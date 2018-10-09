@@ -45,20 +45,18 @@ Data Re-shaping Prompt
 -   Build a table and a scatterplot
 
 ``` r
-q1_table <- gapminder %>% #Create a new variable for the tibble
-  select(year, country, lifeExp) %>% #Reduce the data set
+q1_table <- gapminder %>% #Create a tibble so we can re-use it later
+  select(year, country, lifeExp) %>% #Reduce the data set size for faster processing
     group_by(year) %>% 
-      spread(key = "country", value = "lifeExp") %>% #Spread countries across columns
-        select("Canada", "Germany", "Brazil")# %>% #Select only two countries to display
+      spread(key = "country", value = "lifeExp") %>% 
+        select("Canada", "Germany", "Brazil")# %>%
 ```
 
     ## Adding missing grouping variables: `year`
 
 ``` r
-        #summarize()
-
 q1_table %>% 
-  kable(col.names = c("Year", "Canada", "Germany", "Brazil"))
+  kable(col.names = c("Year", "Canada", "Germany", "Brazil")) #Use kable to enhance the output
 ```
 
 |  Year|  Canada|  Germany|  Brazil|
@@ -78,6 +76,7 @@ q1_table %>%
 
 ``` r
 #Check that the data is a tibble
+#Change my graph theme
 ```
 
 Plot
@@ -87,15 +86,22 @@ Plot
 q1_table %>%
   ggplot(aes(x = year, y = value, color = variable)) +
   geom_point(aes(y = Canada, col = "Canada"), size=5) +
+  geom_line(aes(y = Canada, col = "Canada")) +
   geom_point(aes(y = Germany, col = "Germany"), size=5) +
+  geom_line(aes(y = Germany, col = "Germany")) +
   geom_point(aes(y = Brazil, col = "Brazil"), size=5) +
+  geom_line(aes(y = Brazil, col = "Brazil")) +
   #Add labels
-  labs(title = "Life expectancy from 1952-2007 (Canada, Germany, Brazil)",
+  labs(title = "Life expectancy from 1952-2007, (Canada, Germany, Brazil)",
     x = "Year", y = "Life Expectancy",
     color = "Countries\n")
 ```
 
 ![](hw04-exercise_files/figure-markdown_github/unnamed-chunk-4-1.png)
+
+### Observations & Analyses
+
+I didn't end up using gather() (which effectively does the opposite as spread.
 
 Join Prompt (join, merge, look up)
 ----------------------------------
@@ -106,6 +112,82 @@ Join Prompt (join, merge, look up)
 
 -   Reduce the data subset using select and group\_by
 -   Find the minimum and maximum values
+
+``` r
+medieval_weapons <- "
+name,        attack_type, wielding,       damage
+shuriken,    ranged,      one-handed,     2
+flail,       melee,       one-handed,     4
+great_sword, melee,       two-handed,     8
+crossbow,    ranged,      one-handed,     2
+Excalibur,   melee,       one-handed,     6
+dagger,      melee,       one-handed,     3
+staff,       melee,       two-handed,     5
+"
+medieval_weapons <- read_csv(medieval_weapons, skip = 1)
+
+stun_bonus <- "
+  wielding,   chance_to_stun
+  two-handed, 0.15
+"
+stun_bonus <- read_csv(stun_bonus, skip = 1)
+
+left_join(medieval_weapons, stun_bonus) %>% 
+  kable(caption = "Left Join")
+```
+
+    ## Joining, by = "wielding"
+
+| name         | attack\_type | wielding   |  damage|  chance\_to\_stun|
+|:-------------|:-------------|:-----------|-------:|-----------------:|
+| shuriken     | ranged       | one-handed |       2|                NA|
+| flail        | melee        | one-handed |       4|                NA|
+| great\_sword | melee        | two-handed |       8|              0.15|
+| crossbow     | ranged       | one-handed |       2|                NA|
+| Excalibur    | melee        | one-handed |       6|                NA|
+| dagger       | melee        | one-handed |       3|                NA|
+| staff        | melee        | two-handed |       5|              0.15|
+
+``` r
+right_join(medieval_weapons, stun_bonus) %>% 
+  kable()
+```
+
+    ## Joining, by = "wielding"
+
+| name         | attack\_type | wielding   |  damage|  chance\_to\_stun|
+|:-------------|:-------------|:-----------|-------:|-----------------:|
+| great\_sword | melee        | two-handed |       8|              0.15|
+| staff        | melee        | two-handed |       5|              0.15|
+
+``` r
+inner_join(medieval_weapons, stun_bonus)
+```
+
+    ## Joining, by = "wielding"
+
+    ## # A tibble: 2 x 5
+    ##   name        attack_type wielding   damage chance_to_stun
+    ##   <chr>       <chr>       <chr>       <int>          <dbl>
+    ## 1 great_sword melee       two-handed      8           0.15
+    ## 2 staff       melee       two-handed      5           0.15
+
+``` r
+full_join(medieval_weapons, stun_bonus)
+```
+
+    ## Joining, by = "wielding"
+
+    ## # A tibble: 7 x 5
+    ##   name        attack_type wielding   damage chance_to_stun
+    ##   <chr>       <chr>       <chr>       <int>          <dbl>
+    ## 1 shuriken    ranged      one-handed      2          NA   
+    ## 2 flail       melee       one-handed      4          NA   
+    ## 3 great_sword melee       two-handed      8           0.15
+    ## 4 crossbow    ranged      one-handed      2          NA   
+    ## 5 Excalibur   melee       one-handed      6          NA   
+    ## 6 dagger      melee       one-handed      3          NA   
+    ## 7 staff       melee       two-handed      5           0.15
 
 *Activity 3: Explore the merge() and match() functions. Contrast and compare.*
 

@@ -1,7 +1,7 @@
 ---
 title: "hw04-exercise"
 output:
-  github_document
+  html_document
 ---
 
 # Tidy data and joins
@@ -14,8 +14,10 @@ output:
 suppressPackageStartupMessages(library(tidyverse))
 suppressPackageStartupMessages(library(gapminder))
 suppressPackageStartupMessages(library(knitr))
+suppressPackageStartupMessages(library(kableExtra))
 ```
 
+* The kableExtra package gives new options for styling tables!
 * We will take a quick look at the data to *sanity check* that the data and variables appear as we expect:
 
 ```{r}
@@ -33,17 +35,18 @@ suppressPackageStartupMessages(library(knitr))
 * Build a table and a scatterplot
 
 ```{r}
-q1_table <- gapminder %>% #Create a new variable for the tibble
-  select(year, country, lifeExp) %>% #Reduce the data set
+q1_table <- gapminder %>% #Create a tibble so we can re-use it later
+  select(year, country, lifeExp) %>% #Reduce the data set size for faster processing
     group_by(year) %>% 
-      spread(key = "country", value = "lifeExp") %>% #Spread countries across columns
-        select("Canada", "Germany", "Brazil")# %>% #Select only two countries to display
-        #summarize()
+      spread(key = "country", value = "lifeExp") %>% 
+        select("Canada", "Germany", "Brazil")# %>%
 
 q1_table %>% 
-  kable(col.names = c("Year", "Canada", "Germany", "Brazil"))
+  kable(col.names = c("Year", "Canada", "Germany", "Brazil")) %>% #Use kable to enhance the output
+    kable_styling()
 
 #Check that the data is a tibble
+#Change my graph theme
 
 ```
 #Plot
@@ -52,27 +55,99 @@ q1_table %>%
 q1_table %>%
   ggplot(aes(x = year, y = value, color = variable)) +
   geom_point(aes(y = Canada, col = "Canada"), size=5) +
+  geom_line(aes(y = Canada, col = "Canada")) +
   geom_point(aes(y = Germany, col = "Germany"), size=5) +
+  geom_line(aes(y = Germany, col = "Germany")) +
   geom_point(aes(y = Brazil, col = "Brazil"), size=5) +
+  geom_line(aes(y = Brazil, col = "Brazil")) +
   #Add labels
-  labs(title = "Life expectancy from 1952-2007 (Canada, Germany, Brazil)",
+  labs(title = "Life expectancy from 1952-2007, (Canada, Germany, Brazil)",
     x = "Year", y = "Life Expectancy",
     color = "Countries\n")
 
 ```
 
+### Observations & Analyses
+I didn't end up using gather() (which effectively does the opposite as spread.
 
 ## Join Prompt (join, merge, look up)
 *Activity 2: Make your own cheatsheet; iterate between your data prep and your joining to make your explorations comprehensive and interesting. Demonstrate all the types of joins.*
 
 ### Method
-* Reduce the data subset using select and group_by
-* Find the minimum and maximum values
+* Create two tables with some overlapping columns and rows
+* Explore different types of joins
 
 ```{r}
+medieval_weapons <- "
+name,        attack_type, wielding,       damage
+shuriken,    ranged,      one-handed,     2
+flail,       melee,       one-handed,     4
+great_sword, melee,       two-handed,     8
+crossbow,    ranged,      one-handed,     2
+Excalibur,   melee,       one-handed,     6
+dagger,      melee,       one-handed,     3
+staff,       melee,       two-handed,     5
+"
+medieval_weapons <- read_csv(medieval_weapons, skip = 1)
+
+stun_bonus <- "
+  wielding,   chance_to_stun
+  two-handed, 0.15
+"
+stun_bonus <- read_csv(stun_bonus, skip = 1)
 
 ```
 
+### Left and Right Joins
+
+```{r}
+# lj <- left_join(medieval_weapons, stun_bonus, by = "wielding") %>% 
+#   kable(col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun")) %>% 
+#   kable_styling(full_width = FALSE, position = "float_left")
+# 
+# rj <- right_join(medieval_weapons, stun_bonus, by = "wielding") %>% 
+#   kable(col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun")) %>% 
+#   kable_styling(full_width = FALSE, position = "right")
+# 
+# lj
+# rj
+
+lj <- left_join(medieval_weapons, stun_bonus, by = "wielding")
+rj <- right_join(medieval_weapons, stun_bonus, by = "wielding")
+kable(
+  list(lj, rj),
+  col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun"))
+```
+
+On the left is a left join, on the right is a right join.
+### Inner and Full Joins
+
+```{r}
+ij <- inner_join(medieval_weapons, stun_bonus, by = "wielding") %>% 
+  kable(col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun")) %>% 
+  kable_styling(bootstrap_options = "striped", full_width=F, position="float_left")
+ij
+
+```
+This is an inner join.
+
+
+
+
+
+
+```{r}
+
+fj <- full_join(medieval_weapons, stun_bonus, by = "wielding") %>% 
+  kable(col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun")) %>% 
+  kable_styling(bootstrap_options = "striped", full_width=F, position="float_right")
+fj
+
+#kable(
+ # list(ij, fj),
+  #col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun"))
+```
+This is a full join.
 
 *Activity 3: Explore the merge() and match() functions. Contrast and compare.*
 
