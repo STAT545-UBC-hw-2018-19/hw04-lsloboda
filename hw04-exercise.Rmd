@@ -41,7 +41,7 @@ q1_table <- gapminder %>% #Create a tibble so we can re-use it later
   select(year, country, lifeExp) %>% #Reduce the data set size for faster processing
     group_by(year) %>% 
       spread(key = "country", value = "lifeExp") %>% 
-        select("Canada", "Germany", "Brazil")# %>%
+        select("Canada", "Germany", "Brazil")
 
 q1_table %>% 
   kable(col.names = c("Year", "Canada", "Germany", "Brazil")) %>% #Use kable to enhance the output
@@ -137,8 +137,9 @@ kable(
 ```{r}
 merge_test <- merge(medieval_weapons, stun_bonus, by = "wielding") %>% 
 kable(col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun", "Stun Damage (HP)"))
+merge_test
 
-match_test <- match(medieval_weapons, stun_bonus)
+(match_test <- match(medieval_weapons, stun_bonus))
 
 
 ```

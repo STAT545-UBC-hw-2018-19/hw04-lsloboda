@@ -169,7 +169,7 @@ suppressPackageStartupMessages(library(kableExtra))</code></pre>
   select(year, country, lifeExp) %&gt;% #Reduce the data set size for faster processing
     group_by(year) %&gt;% 
       spread(key = &quot;country&quot;, value = &quot;lifeExp&quot;) %&gt;% 
-        select(&quot;Canada&quot;, &quot;Germany&quot;, &quot;Brazil&quot;)# %&gt;%</code></pre>
+        select(&quot;Canada&quot;, &quot;Germany&quot;, &quot;Brazil&quot;)</code></pre>
 <pre><code>## Adding missing grouping variables: `year`</code></pre>
 <pre class="r"><code>q1_table %&gt;% 
   kable(col.names = c(&quot;Year&quot;, &quot;Canada&quot;, &quot;Germany&quot;, &quot;Brazil&quot;)) %&gt;% #Use kable to enhance the output
@@ -1069,8 +1069,75 @@ one-handed
 <p><em>Activity 3: Explore the merge() and match() functions. Contrast and compare.</em></p>
 <pre class="r"><code>merge_test &lt;- merge(medieval_weapons, stun_bonus, by = &quot;wielding&quot;) %&gt;% 
 kable(col.names = c(&quot;Weapon&quot;, &quot;Attack Type&quot;, &quot;Wielding Type&quot;, &quot;Damage (HP)&quot;, &quot;Chance to Stun&quot;, &quot;Stun Damage (HP)&quot;))
-
-match_test &lt;- match(medieval_weapons, stun_bonus)</code></pre>
+merge_test</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Weapon
+</th>
+<th style="text-align:left;">
+Attack Type
+</th>
+<th style="text-align:left;">
+Wielding Type
+</th>
+<th style="text-align:right;">
+Damage (HP)
+</th>
+<th style="text-align:right;">
+Chance to Stun
+</th>
+<th style="text-align:right;">
+Stun Damage (HP)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+two-handed
+</td>
+<td style="text-align:left;">
+great_sword
+</td>
+<td style="text-align:left;">
+melee
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+0.15
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+two-handed
+</td>
+<td style="text-align:left;">
+staff
+</td>
+<td style="text-align:left;">
+melee
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0.15
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>(match_test &lt;- match(medieval_weapons, stun_bonus))</code></pre>
+<pre><code>## [1] NA NA NA NA</code></pre>
 </div>
 </div>
 </div>

@@ -56,7 +56,7 @@ q1_table <- gapminder %>% #Create a tibble so we can re-use it later
   select(year, country, lifeExp) %>% #Reduce the data set size for faster processing
     group_by(year) %>% 
       spread(key = "country", value = "lifeExp") %>% 
-        select("Canada", "Germany", "Brazil")# %>%
+        select("Canada", "Germany", "Brazil")
 ```
 
 ```
@@ -560,6 +560,44 @@ kable(
 ```r
 merge_test <- merge(medieval_weapons, stun_bonus, by = "wielding") %>% 
 kable(col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun", "Stun Damage (HP)"))
+merge_test
+```
 
-match_test <- match(medieval_weapons, stun_bonus)
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Weapon </th>
+   <th style="text-align:left;"> Attack Type </th>
+   <th style="text-align:left;"> Wielding Type </th>
+   <th style="text-align:right;"> Damage (HP) </th>
+   <th style="text-align:right;"> Chance to Stun </th>
+   <th style="text-align:right;"> Stun Damage (HP) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> two-handed </td>
+   <td style="text-align:left;"> great_sword </td>
+   <td style="text-align:left;"> melee </td>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 0.15 </td>
+   <td style="text-align:right;"> 10 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> two-handed </td>
+   <td style="text-align:left;"> staff </td>
+   <td style="text-align:left;"> melee </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 0.15 </td>
+   <td style="text-align:right;"> 10 </td>
+  </tr>
+</tbody>
+</table>
+
+```r
+(match_test <- match(medieval_weapons, stun_bonus))
+```
+
+```
+## [1] NA NA NA NA
 ```
