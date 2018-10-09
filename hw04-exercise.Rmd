@@ -29,7 +29,7 @@ suppressPackageStartupMessages(library(kableExtra))
 * Everything looks as expected, so let's start exploring the data
 
 ## Data Re-shaping Prompt
-### *Activity 2: Make a tibble with one row per year and columns for life expectancy for two or more countries. Use kable() to make the table look pretty. Scatterplot life expectancy for one country against that of another.*
+*Activity 2: Make a tibble with one row per year and columns for life expectancy for two or more countries. Use kable() to make the table look pretty. Scatterplot life expectancy for one country against that of another.*
 
 ### Method
 * Reduce the data subset using *select()* and *group_by()*
@@ -51,6 +51,7 @@ q1_table %>%
   kable(col.names = c("Year", "Canada", "Germany", "Brazil")) %>% #Using kable enhances the output
     kable_styling()
 ```
+
 ### Plot
 
 ```{r}
@@ -75,7 +76,7 @@ The slope of the lines indicates the rate of increase of life expectancy. From t
 The table is useful for picking out exact values and comparing values on a year-by-year basis. However, it is easier to see the overall trend of increasing life expectancy for all countries in the multi-series plot. I didn't need to use the gather() function to create either the table or the plot, as it effectively does the opposite as the spread function. I'm curious to find out whether there is a more concise way to code multiple y-series on a plot (e.g. using a loop to auto-read in the table names and data rather than hard-coding).
 
 ## Join Prompt (join, merge, look up)
-### *Activity 2: Make your own cheatsheet; iterate between your data prep and your joining to make your explorations comprehensive and interesting. Demonstrate all the types of joins.*
+*Activity 2: Make your own cheatsheet; iterate between your data prep and your joining to make your explorations comprehensive and interesting. Demonstrate all the types of joins.*
 
 ### Method
 * Create two tables with some overlapping columns and rows
