@@ -462,13 +462,15 @@ kable(
 </tbody>
 </table>
 
+### Semi and Anti Joins
+
 
 ```r
 sj <- semi_join(medieval_weapons, stun_bonus, by = "wielding") 
 aj <- anti_join(medieval_weapons, stun_bonus, by = "wielding") 
 kable(
-  list(ij, fj),
-  col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun", "Stun Damage (HP)"))
+  list(sj, aj),
+  col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)"))
 ```
 
 <table class="kable_wrapper">
@@ -483,8 +485,6 @@ kable(
    <th style="text-align:left;"> Attack Type </th>
    <th style="text-align:left;"> Wielding Type </th>
    <th style="text-align:right;"> Damage (HP) </th>
-   <th style="text-align:right;"> Chance to Stun </th>
-   <th style="text-align:right;"> Stun Damage (HP) </th>
   </tr>
  </thead>
 <tbody>
@@ -493,16 +493,12 @@ kable(
    <td style="text-align:left;"> melee </td>
    <td style="text-align:left;"> two-handed </td>
    <td style="text-align:right;"> 8 </td>
-   <td style="text-align:right;"> 0.15 </td>
-   <td style="text-align:right;"> 10 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> staff </td>
    <td style="text-align:left;"> melee </td>
    <td style="text-align:left;"> two-handed </td>
    <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 0.15 </td>
-   <td style="text-align:right;"> 10 </td>
   </tr>
 </tbody>
 </table>
@@ -517,8 +513,6 @@ kable(
    <th style="text-align:left;"> Attack Type </th>
    <th style="text-align:left;"> Wielding Type </th>
    <th style="text-align:right;"> Damage (HP) </th>
-   <th style="text-align:right;"> Chance to Stun </th>
-   <th style="text-align:right;"> Stun Damage (HP) </th>
   </tr>
  </thead>
 <tbody>
@@ -527,56 +521,30 @@ kable(
    <td style="text-align:left;"> ranged </td>
    <td style="text-align:left;"> one-handed </td>
    <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> NA </td>
-   <td style="text-align:right;"> NA </td>
   </tr>
   <tr>
    <td style="text-align:left;"> flail </td>
    <td style="text-align:left;"> melee </td>
    <td style="text-align:left;"> one-handed </td>
    <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> NA </td>
-   <td style="text-align:right;"> NA </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> great_sword </td>
-   <td style="text-align:left;"> melee </td>
-   <td style="text-align:left;"> two-handed </td>
-   <td style="text-align:right;"> 8 </td>
-   <td style="text-align:right;"> 0.15 </td>
-   <td style="text-align:right;"> 10 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> crossbow </td>
    <td style="text-align:left;"> ranged </td>
    <td style="text-align:left;"> one-handed </td>
    <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> NA </td>
-   <td style="text-align:right;"> NA </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Excalibur </td>
    <td style="text-align:left;"> melee </td>
    <td style="text-align:left;"> one-handed </td>
    <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> NA </td>
-   <td style="text-align:right;"> NA </td>
   </tr>
   <tr>
    <td style="text-align:left;"> dagger </td>
    <td style="text-align:left;"> melee </td>
    <td style="text-align:left;"> one-handed </td>
    <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> NA </td>
-   <td style="text-align:right;"> NA </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> staff </td>
-   <td style="text-align:left;"> melee </td>
-   <td style="text-align:left;"> two-handed </td>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 0.15 </td>
-   <td style="text-align:right;"> 10 </td>
   </tr>
 </tbody>
 </table>
@@ -586,11 +554,12 @@ kable(
 </tbody>
 </table>
 
-
-
 *Activity 3: Explore the merge() and match() functions. Contrast and compare.*
 
-### Method
-* Reduce the data subset using se
 
+```r
+merge_test <- merge(medieval_weapons, stun_bonus, by = "wielding") %>% 
+kable(col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun", "Stun Damage (HP)"))
 
+match_test <- match(medieval_weapons, stun_bonus)
+```

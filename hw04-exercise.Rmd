@@ -122,19 +122,23 @@ kable(
 
 ```
 
+### Semi and Anti Joins
+
 ```{r}
 sj <- semi_join(medieval_weapons, stun_bonus, by = "wielding") 
 aj <- anti_join(medieval_weapons, stun_bonus, by = "wielding") 
 kable(
-  list(ij, fj),
-  col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun", "Stun Damage (HP)"))
+  list(sj, aj),
+  col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)"))
 ```
-
-
 
 *Activity 3: Explore the merge() and match() functions. Contrast and compare.*
 
-### Method
-* Reduce the data subset using se
+```{r}
+merge_test <- merge(medieval_weapons, stun_bonus, by = "wielding") %>% 
+kable(col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun", "Stun Damage (HP)"))
+
+match_test <- match(medieval_weapons, stun_bonus)
 
 
+```

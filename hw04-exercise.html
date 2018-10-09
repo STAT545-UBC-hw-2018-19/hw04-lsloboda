@@ -910,11 +910,14 @@ two-handed
 </tr>
 </tbody>
 </table>
+</div>
+<div id="semi-and-anti-joins" class="section level3">
+<h3>Semi and Anti Joins</h3>
 <pre class="r"><code>sj &lt;- semi_join(medieval_weapons, stun_bonus, by = &quot;wielding&quot;) 
 aj &lt;- anti_join(medieval_weapons, stun_bonus, by = &quot;wielding&quot;) 
 kable(
-  list(ij, fj),
-  col.names = c(&quot;Weapon&quot;, &quot;Attack Type&quot;, &quot;Wielding Type&quot;, &quot;Damage (HP)&quot;, &quot;Chance to Stun&quot;, &quot;Stun Damage (HP)&quot;))</code></pre>
+  list(sj, aj),
+  col.names = c(&quot;Weapon&quot;, &quot;Attack Type&quot;, &quot;Wielding Type&quot;, &quot;Damage (HP)&quot;))</code></pre>
 <table class="kable_wrapper">
 <tbody>
 <tr>
@@ -934,12 +937,6 @@ Wielding Type
 <th style="text-align:right;">
 Damage (HP)
 </th>
-<th style="text-align:right;">
-Chance to Stun
-</th>
-<th style="text-align:right;">
-Stun Damage (HP)
-</th>
 </tr>
 </thead>
 <tbody>
@@ -956,12 +953,6 @@ two-handed
 <td style="text-align:right;">
 8
 </td>
-<td style="text-align:right;">
-0.15
-</td>
-<td style="text-align:right;">
-10
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -975,12 +966,6 @@ two-handed
 </td>
 <td style="text-align:right;">
 5
-</td>
-<td style="text-align:right;">
-0.15
-</td>
-<td style="text-align:right;">
-10
 </td>
 </tr>
 </tbody>
@@ -1002,12 +987,6 @@ Wielding Type
 <th style="text-align:right;">
 Damage (HP)
 </th>
-<th style="text-align:right;">
-Chance to Stun
-</th>
-<th style="text-align:right;">
-Stun Damage (HP)
-</th>
 </tr>
 </thead>
 <tbody>
@@ -1024,12 +1003,6 @@ one-handed
 <td style="text-align:right;">
 2
 </td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -1043,32 +1016,6 @@ one-handed
 </td>
 <td style="text-align:right;">
 4
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-great_sword
-</td>
-<td style="text-align:left;">
-melee
-</td>
-<td style="text-align:left;">
-two-handed
-</td>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:right;">
-0.15
-</td>
-<td style="text-align:right;">
-10
 </td>
 </tr>
 <tr>
@@ -1084,12 +1031,6 @@ one-handed
 <td style="text-align:right;">
 2
 </td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -1103,12 +1044,6 @@ one-handed
 </td>
 <td style="text-align:right;">
 6
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
 </td>
 </tr>
 <tr>
@@ -1124,32 +1059,6 @@ one-handed
 <td style="text-align:right;">
 3
 </td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-staff
-</td>
-<td style="text-align:left;">
-melee
-</td>
-<td style="text-align:left;">
-two-handed
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-0.15
-</td>
-<td style="text-align:right;">
-10
-</td>
 </tr>
 </tbody>
 </table>
@@ -1158,12 +1067,10 @@ two-handed
 </tbody>
 </table>
 <p><em>Activity 3: Explore the merge() and match() functions. Contrast and compare.</em></p>
-</div>
-<div id="method-2" class="section level3">
-<h3>Method</h3>
-<ul>
-<li>Reduce the data subset using se</li>
-</ul>
+<pre class="r"><code>merge_test &lt;- merge(medieval_weapons, stun_bonus, by = &quot;wielding&quot;) %&gt;% 
+kable(col.names = c(&quot;Weapon&quot;, &quot;Attack Type&quot;, &quot;Wielding Type&quot;, &quot;Damage (HP)&quot;, &quot;Chance to Stun&quot;, &quot;Stun Damage (HP)&quot;))
+
+match_test &lt;- match(medieval_weapons, stun_bonus)</code></pre>
 </div>
 </div>
 </div>
