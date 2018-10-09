@@ -16,8 +16,6 @@ suppressPackageStartupMessages(library(gapminder))
 suppressPackageStartupMessages(library(knitr))
 ```
 
-
-* The knitr library is useful for improving the appearance of tables using the kable() command, described in more detail [here](https://www.rdocumentation.org/packages/knitr/versions/1.20/topics/kable).
 * We will take a quick look at the data to *sanity check* that the data and variables appear as we expect:
 
 ```{r}
@@ -26,9 +24,22 @@ suppressPackageStartupMessages(library(knitr))
 
 * Everything looks as expected, so let's start exploring the data
 
-## Task 1
-*Get the max and min GDP per capita for all continents.*
+## Data Re-shaping Prompt
+*Activity 2: Make a tibble with one row per year and columns for life expectancy for two or more countries. Use kable() to make the table look pretty. Scatterplot life expectancy for one country against that of another.*
 
 ### Method
 * Reduce the data subset using select and group_by
 * Find the minimum and maximum values
+
+## Join Prompt (join, merge, look up)
+*Activity 2: Make your own cheatsheet; iterate between your data prep and your joining to make your explorations comprehensive and interesting. Demonstrate all the types of joins.*
+
+### Method
+* Reduce the data subset using select and group_by
+* Find the minimum and maximum values
+
+*Activity 3: Explore the merge() and match() functions. Contrast and compare.*
+
+### Method
+* Reduce the data subset using se
+

@@ -2,7 +2,7 @@
 
 ## Overview
 **This repo contains the files relevant to STAT 545 Homework 04.**
-The homework file is located [here](https://github.com/STAT545-UBC-students/hw03-lsloboda/blob/master/hw04-exercise.md).
+The homework file is located [here](https://github.com/STAT545-UBC-students/hw04-lsloboda/blob/master/hw04-exercise.md).
 
 ## Purpose
 
