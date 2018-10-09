@@ -10,7 +10,7 @@ output:
 
 ## Initialize the data
 
-* Load the gapminder, tidyverse and knitr libraries:
+* Load the gapminder, tidyverse, knitr and kableExtra libraries:
 
 
 ```r
@@ -20,7 +20,7 @@ suppressPackageStartupMessages(library(knitr))
 suppressPackageStartupMessages(library(kableExtra))
 ```
 
-* The kableExtra package gives new options for styling tables, but since they are in HTML, we won't get to see the effects in this .md file
+* The *kableExtra* package gives new options for styling tables (but since they are in HTML, we won't get to see the effects in this .md file)
 * We will take a quick look at the data to *sanity check* that the data and variables appear as we expect:
 
 
@@ -47,16 +47,18 @@ suppressPackageStartupMessages(library(kableExtra))
 
 ### Method
 * Reduce the data subset using select and group_by
-* Spread the countries across the columns
-* Build a table and a scatterplot
+* Spread the countries across the columns using spread
+* Build a table and a scatterplot to compare life expectancy for two or more countries
+
+### Table
 
 
 ```r
-q1_table <- gapminder %>% #Create a tibble so we can re-use it later
-  select(year, country, lifeExp) %>% #Reduce the data set size for faster processing
+q1_table <- gapminder %>% #Creates a tibble so we can re-use it later
+  select(year, country, lifeExp) %>% #Reduces the data set size for faster processing
     group_by(year) %>% 
       spread(key = "country", value = "lifeExp") %>% 
-        select("Canada", "Germany", "Brazil")
+        select("Canada", "Germany", "Brazil") 
 ```
 
 ```
@@ -64,8 +66,16 @@ q1_table <- gapminder %>% #Create a tibble so we can re-use it later
 ```
 
 ```r
+is.tibble(q1_table)
+```
+
+```
+## [1] TRUE
+```
+
+```r
 q1_table %>% 
-  kable(col.names = c("Year", "Canada", "Germany", "Brazil")) %>% #Use kable to enhance the output
+  kable(col.names = c("Year", "Canada", "Germany", "Brazil")) %>% #Using kable enhances the output
     kable_styling()
 ```
 
@@ -153,12 +163,7 @@ q1_table %>%
   </tr>
 </tbody>
 </table>
-
-```r
-#Check that the data is a tibble
-#Change my graph theme
-```
-#Plot
+###Plot
 
 
 ```r
@@ -179,7 +184,9 @@ q1_table %>%
 ![](hw04-exercise_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
 ### Observations & Analyses
-I didn't end up using gather() (which effectively does the opposite as spread.
+The slope of the lines indicates the rate of increase of life expectancy. From the plot, we observe that the life expectancy for Brazil increased at the highest rate over the time period studied, although the absolute value of life expectancy is higher in both Canada and Germany, respectively, than in Brazil. The life expectancy of Canada and Germany increases at approximately the rate, where Canada's life expectancy is marginally higher. We observe a small dip in life expectancy in Germany in the mid-1970s. All of the countries exhibit a positive linear correlation between life expectancy and time.
+
+The table is useful for picking out exact values and comparing values on a year-by-year basis. However, it is easier to see the overall trend of increasing life expectancy for all countries in the multi-series plot. I didn't need to use the gather() function to create either the table or the plot, as it effectively does the opposite as the spread function. I'm curious to find out whether there is a more concise way to code multiple y-series on a plot (e.g. using a loop to auto-read in the table names and data rather than hard-coding).
 
 ## Join Prompt (join, merge, look up)
 *Activity 2: Make your own cheatsheet; iterate between your data prep and your joining to make your explorations comprehensive and interesting. Demonstrate all the types of joins.*
@@ -187,6 +194,9 @@ I didn't end up using gather() (which effectively does the opposite as spread.
 ### Method
 * Create two tables with some overlapping columns and rows
 * Explore different types of joins
+
+### Dataset Creation
+* We will create a dataset to experiment with joins
 
 
 ```r
@@ -210,6 +220,10 @@ stun_bonus <- read_csv(stun_bonus, skip = 1)
 ```
 
 ### Left and Right Joins
+* *Left_join(x,y)* uses *x* as a starting point; it matches columns from *y* to *x*
+* A left join example is shown in the **left** table, below
+* *Right_join(x,y)* uses *y* as a starting point; it matches columns from *x* to *y*
+* A right join example is shown in the **right** table, below
 
 
 ```r
@@ -335,8 +349,15 @@ kable(
 </tbody>
 </table>
 
-On the left is a left join, on the right is a right join.
+
+
+We observe that the left join table produced many NA data entries in this example, because the *y* dataset was smaller than *x* and only applied to a subset of the *x* rows. Removing the NA entries would result in the same as the right join table. Switching the *x* and *y* datasets (i.e. changing the order in which data is fed to the function) is akin to switching between left and right join types. It is important to understand which dataset you would like to use a the basis when determining which join to use in this case.
+
 ### Inner and Full Joins
+* *Inner_join(x,y)* uses *x* retains only rows with matches between *x* and *y*
+* An inner join example is shown in the **left** table, below
+* *Full_join(x,y)* retains all values and all rows from *x* and *y*
+* A full join example is shown in the **right** table, below
 
 
 ```r
@@ -462,7 +483,137 @@ kable(
 </tbody>
 </table>
 
+```r
+ij <- inner_join(stun_bonus, medieval_weapons,  by = "wielding") 
+fj <- full_join(stun_bonus, medieval_weapons, by = "wielding") 
+kable(
+  list(ij, fj),
+  col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun", "Stun Damage (HP)"))
+```
+
+<table class="kable_wrapper">
+<tbody>
+  <tr>
+   <td> 
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Weapon </th>
+   <th style="text-align:right;"> Attack Type </th>
+   <th style="text-align:right;"> Wielding Type </th>
+   <th style="text-align:left;"> Damage (HP) </th>
+   <th style="text-align:left;"> Chance to Stun </th>
+   <th style="text-align:right;"> Stun Damage (HP) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> two-handed </td>
+   <td style="text-align:right;"> 0.15 </td>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:left;"> great_sword </td>
+   <td style="text-align:left;"> melee </td>
+   <td style="text-align:right;"> 8 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> two-handed </td>
+   <td style="text-align:right;"> 0.15 </td>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:left;"> staff </td>
+   <td style="text-align:left;"> melee </td>
+   <td style="text-align:right;"> 5 </td>
+  </tr>
+</tbody>
+</table>
+
+ </td>
+   <td> 
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Weapon </th>
+   <th style="text-align:right;"> Attack Type </th>
+   <th style="text-align:right;"> Wielding Type </th>
+   <th style="text-align:left;"> Damage (HP) </th>
+   <th style="text-align:left;"> Chance to Stun </th>
+   <th style="text-align:right;"> Stun Damage (HP) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> two-handed </td>
+   <td style="text-align:right;"> 0.15 </td>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:left;"> great_sword </td>
+   <td style="text-align:left;"> melee </td>
+   <td style="text-align:right;"> 8 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> two-handed </td>
+   <td style="text-align:right;"> 0.15 </td>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:left;"> staff </td>
+   <td style="text-align:left;"> melee </td>
+   <td style="text-align:right;"> 5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> one-handed </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:left;"> shuriken </td>
+   <td style="text-align:left;"> ranged </td>
+   <td style="text-align:right;"> 2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> one-handed </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:left;"> flail </td>
+   <td style="text-align:left;"> melee </td>
+   <td style="text-align:right;"> 4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> one-handed </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:left;"> crossbow </td>
+   <td style="text-align:left;"> ranged </td>
+   <td style="text-align:right;"> 2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> one-handed </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:left;"> Excalibur </td>
+   <td style="text-align:left;"> melee </td>
+   <td style="text-align:right;"> 6 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> one-handed </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:left;"> dagger </td>
+   <td style="text-align:left;"> melee </td>
+   <td style="text-align:right;"> 3 </td>
+  </tr>
+</tbody>
+</table>
+
+ </td>
+  </tr>
+</tbody>
+</table>
+
+
+In this case, the full join table is the same as the left join table shown in the previous example. Similarly, the inner join table is the same as the right join table shown previously. However, this is true in this example due to the simplicity of the data set and does not hold true as a generalization for using these types of joins. It is expected that using inner join produces a smaller table than full join, since inner join looks only for matches and therefore excludes all NA entries. Further, we observe that the order of *x* and *y* does not affect the result of these joins, as expected.
+
 ### Semi and Anti Joins
+* *Semi_join(x,y)* returns rows of *x* that have a match in *y*, which is useful for determining what *will* be joined
+* A semi join example is shown in the **left** table, below
+* *Anti_join(x,y)* returns rows of *x* that don't have a match in *y* (effectively the opposite as semi-join)
+* An anti join example is shown in the **right** table, below
 
 
 ```r
@@ -554,7 +705,69 @@ kable(
 </tbody>
 </table>
 
+
+In both tables above, we observe that only the columns from *x* are present. In the semi join table, we observe the same rows that were identified as matching rows when we used inner join. Thus, semi join can be used to predict which rows from a given data set will be joined. The anti join table shows all of the remaining rows which are not present in the semi join table. Semi and anti join are sensitive to the order in which they are fed the data sets, as illustrated by switching the variable order below.
+
+
+```r
+sj2 <- semi_join(stun_bonus, medieval_weapons,  by = "wielding") 
+aj2 <- anti_join(stun_bonus, medieval_weapons,  by = "wielding") 
+kable(
+  list(sj2, aj2),
+  col.names = c("Weapon", "Chance to Stun", "Stun Damage (HP)"))
+```
+
+<table class="kable_wrapper">
+<tbody>
+  <tr>
+   <td> 
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Weapon </th>
+   <th style="text-align:right;"> Chance to Stun </th>
+   <th style="text-align:right;"> Stun Damage (HP) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> two-handed </td>
+   <td style="text-align:right;"> 0.15 </td>
+   <td style="text-align:right;"> 10 </td>
+  </tr>
+</tbody>
+</table>
+
+ </td>
+   <td> 
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Weapon </th>
+   <th style="text-align:right;"> Chance to Stun </th>
+   <th style="text-align:right;"> Stun Damage (HP) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+
+  </tr>
+</tbody>
+</table>
+
+ </td>
+  </tr>
+</tbody>
+</table>
+
+Switching the order of the data set clearly affects the output of semi and anti joins. In both tables above, we observe that only the columns from the new *x* data set (previously the *y* data set) are present. Similarly to the previous example, the semi join table shows the same rows that were identified as matching rows when we used inner join. The anti join table shows all of the remaining rows, of which there are none, so there is no data present.
+
+Depending on the application, it could be useful to apply any of these join functions.
+
 *Activity 3: Explore the merge() and match() functions. Contrast and compare.*
+* Merge combines two data frames by common columns or row names by coercion
 
 
 ```r
@@ -594,6 +807,11 @@ merge_test
 </tbody>
 </table>
 
+The output of the merge function above gives the same result as inner join, in this example. Based on my preliminary research, join commands are generally preferred to merge commands, as they are more efficient.
+
+* Match returns a vector of the positions of matches of its first argument in its second
+
+
 ```r
 (match_test <- match(medieval_weapons, stun_bonus))
 ```
@@ -601,3 +819,12 @@ merge_test
 ```
 ## [1] NA NA NA NA
 ```
+
+In this case, there are no matches, so there are no positions to indicate the the test returns NA. Based on preliminary research, it seems that %in% is typically preferred for returning a logical to test whether a match exists.
+
+##Resources
+
+http://blog.espol.edu.ec/nemo/2013/12/23/merge-data-a-review-of-the-differences-between-merge-inner-join-left-join-right-join-full-join-cbind-and-rbind-when-used-data-table-objects-in-r/
+https://stat.ethz.ch/R-manual/R-devel/library/base/html/match.html
+https://github.com/rstudio/rmarkdown/issues/516
+

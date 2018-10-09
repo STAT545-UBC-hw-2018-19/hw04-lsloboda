@@ -131,14 +131,14 @@ $(document).ready(function () {
 <div id="initialize-the-data" class="section level2">
 <h2>Initialize the data</h2>
 <ul>
-<li>Load the gapminder, tidyverse and knitr libraries:</li>
+<li>Load the gapminder, tidyverse, knitr and kableExtra libraries:</li>
 </ul>
 <pre class="r"><code>suppressPackageStartupMessages(library(tidyverse))
 suppressPackageStartupMessages(library(gapminder))
 suppressPackageStartupMessages(library(knitr))
 suppressPackageStartupMessages(library(kableExtra))</code></pre>
 <ul>
-<li>The kableExtra package gives new options for styling tables, but since they are in HTML, we won’t get to see the effects in this .md file</li>
+<li>The <em>kableExtra</em> package gives new options for styling tables (but since they are in HTML, we won’t get to see the effects in this .md file)</li>
 <li>We will take a quick look at the data to <em>sanity check</em> that the data and variables appear as we expect:</li>
 </ul>
 <pre class="r"><code>(head(gapminder))</code></pre>
@@ -162,17 +162,22 @@ suppressPackageStartupMessages(library(kableExtra))</code></pre>
 <h3>Method</h3>
 <ul>
 <li>Reduce the data subset using select and group_by</li>
-<li>Spread the countries across the columns</li>
-<li>Build a table and a scatterplot</li>
+<li>Spread the countries across the columns using spread</li>
+<li>Build a table and a scatterplot to compare life expectancy for two or more countries</li>
 </ul>
-<pre class="r"><code>q1_table &lt;- gapminder %&gt;% #Create a tibble so we can re-use it later
-  select(year, country, lifeExp) %&gt;% #Reduce the data set size for faster processing
+</div>
+<div id="table" class="section level3">
+<h3>Table</h3>
+<pre class="r"><code>q1_table &lt;- gapminder %&gt;% #Creates a tibble so we can re-use it later
+  select(year, country, lifeExp) %&gt;% #Reduces the data set size for faster processing
     group_by(year) %&gt;% 
       spread(key = &quot;country&quot;, value = &quot;lifeExp&quot;) %&gt;% 
-        select(&quot;Canada&quot;, &quot;Germany&quot;, &quot;Brazil&quot;)</code></pre>
+        select(&quot;Canada&quot;, &quot;Germany&quot;, &quot;Brazil&quot;) </code></pre>
 <pre><code>## Adding missing grouping variables: `year`</code></pre>
+<pre class="r"><code>is.tibble(q1_table)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
 <pre class="r"><code>q1_table %&gt;% 
-  kable(col.names = c(&quot;Year&quot;, &quot;Canada&quot;, &quot;Germany&quot;, &quot;Brazil&quot;)) %&gt;% #Use kable to enhance the output
+  kable(col.names = c(&quot;Year&quot;, &quot;Canada&quot;, &quot;Germany&quot;, &quot;Brazil&quot;)) %&gt;% #Using kable enhances the output
     kable_styling()</code></pre>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -362,13 +367,9 @@ Brazil
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>#Check that the data is a tibble
-#Change my graph theme</code></pre>
 </div>
-</div>
-</div>
-<div id="plot" class="section level1">
-<h1>Plot</h1>
+<div id="plot" class="section level3">
+<h3>Plot</h3>
 <pre class="r"><code>q1_table %&gt;%
   ggplot(aes(x = year, y = value, color = variable)) +
   geom_point(aes(y = Canada, col = &quot;Canada&quot;), size=5) +
@@ -382,9 +383,12 @@ Brazil
     x = &quot;Year&quot;, y = &quot;Life Expectancy&quot;,
     color = &quot;Countries\n&quot;)</code></pre>
 <p><img src="hw04-exercise_files/figure-html/unnamed-chunk-4-1.png" /><!-- --></p>
+</div>
 <div id="observations-analyses" class="section level3">
 <h3>Observations &amp; Analyses</h3>
-<p>I didn’t end up using gather() (which effectively does the opposite as spread.</p>
+<p>The slope of the lines indicates the rate of increase of life expectancy. From the plot, we observe that the life expectancy for Brazil increased at the highest rate over the time period studied, although the absolute value of life expectancy is higher in both Canada and Germany, respectively, than in Brazil. The life expectancy of Canada and Germany increases at approximately the rate, where Canada’s life expectancy is marginally higher. We observe a small dip in life expectancy in Germany in the mid-1970s. All of the countries exhibit a positive linear correlation between life expectancy and time.</p>
+<p>The table is useful for picking out exact values and comparing values on a year-by-year basis. However, it is easier to see the overall trend of increasing life expectancy for all countries in the multi-series plot. I didn’t need to use the gather() function to create either the table or the plot, as it effectively does the opposite as the spread function. I’m curious to find out whether there is a more concise way to code multiple y-series on a plot (e.g. using a loop to auto-read in the table names and data rather than hard-coding).</p>
+</div>
 </div>
 <div id="join-prompt-join-merge-look-up" class="section level2">
 <h2>Join Prompt (join, merge, look up)</h2>
@@ -394,6 +398,12 @@ Brazil
 <ul>
 <li>Create two tables with some overlapping columns and rows</li>
 <li>Explore different types of joins</li>
+</ul>
+</div>
+<div id="dataset-creation" class="section level3">
+<h3>Dataset Creation</h3>
+<ul>
+<li>We will create a dataset to experiment with joins</li>
 </ul>
 <pre class="r"><code>medieval_weapons &lt;- &quot;
 name,        attack_type, wielding,       damage
@@ -415,6 +425,12 @@ stun_bonus &lt;- read_csv(stun_bonus, skip = 1)</code></pre>
 </div>
 <div id="left-and-right-joins" class="section level3">
 <h3>Left and Right Joins</h3>
+<ul>
+<li><em>Left_join(x,y)</em> uses <em>x</em> as a starting point; it matches columns from <em>y</em> to <em>x</em></li>
+<li>A left join example is shown in the <strong>left</strong> table, below</li>
+<li><em>Right_join(x,y)</em> uses <em>y</em> as a starting point; it matches columns from <em>x</em> to <em>y</em></li>
+<li>A right join example is shown in the <strong>right</strong> table, below</li>
+</ul>
 <pre class="r"><code>lj &lt;- left_join(medieval_weapons, stun_bonus, by = &quot;wielding&quot;)
 rj &lt;- right_join(medieval_weapons, stun_bonus, by = &quot;wielding&quot;)
 kable(
@@ -662,7 +678,16 @@ two-handed
 </tr>
 </tbody>
 </table>
-<p>On the left is a left join, on the right is a right join. ### Inner and Full Joins</p>
+<p>We observe that the left join table produced many NA data entries in this example, because the <em>y</em> dataset was smaller than <em>x</em> and only applied to a subset of the <em>x</em> rows. Removing the NA entries would result in the same as the right join table. Switching the <em>x</em> and <em>y</em> datasets (i.e. changing the order in which data is fed to the function) is akin to switching between left and right join types. It is important to understand which dataset you would like to use a the basis when determining which join to use in this case.</p>
+</div>
+<div id="inner-and-full-joins" class="section level3">
+<h3>Inner and Full Joins</h3>
+<ul>
+<li><em>Inner_join(x,y)</em> uses <em>x</em> retains only rows with matches between <em>x</em> and <em>y</em></li>
+<li>An inner join example is shown in the <strong>left</strong> table, below</li>
+<li><em>Full_join(x,y)</em> retains all values and all rows from <em>x</em> and <em>y</em></li>
+<li>A full join example is shown in the <strong>right</strong> table, below</li>
+</ul>
 <pre class="r"><code>ij &lt;- inner_join(medieval_weapons, stun_bonus, by = &quot;wielding&quot;) 
 fj &lt;- full_join(medieval_weapons, stun_bonus, by = &quot;wielding&quot;) 
 kable(
@@ -910,9 +935,263 @@ two-handed
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>ij &lt;- inner_join(stun_bonus, medieval_weapons,  by = &quot;wielding&quot;) 
+fj &lt;- full_join(stun_bonus, medieval_weapons, by = &quot;wielding&quot;) 
+kable(
+  list(ij, fj),
+  col.names = c(&quot;Weapon&quot;, &quot;Attack Type&quot;, &quot;Wielding Type&quot;, &quot;Damage (HP)&quot;, &quot;Chance to Stun&quot;, &quot;Stun Damage (HP)&quot;))</code></pre>
+<table class="kable_wrapper">
+<tbody>
+<tr>
+<td>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Weapon
+</th>
+<th style="text-align:right;">
+Attack Type
+</th>
+<th style="text-align:right;">
+Wielding Type
+</th>
+<th style="text-align:left;">
+Damage (HP)
+</th>
+<th style="text-align:left;">
+Chance to Stun
+</th>
+<th style="text-align:right;">
+Stun Damage (HP)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+two-handed
+</td>
+<td style="text-align:right;">
+0.15
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+great_sword
+</td>
+<td style="text-align:left;">
+melee
+</td>
+<td style="text-align:right;">
+8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+two-handed
+</td>
+<td style="text-align:right;">
+0.15
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+staff
+</td>
+<td style="text-align:left;">
+melee
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Weapon
+</th>
+<th style="text-align:right;">
+Attack Type
+</th>
+<th style="text-align:right;">
+Wielding Type
+</th>
+<th style="text-align:left;">
+Damage (HP)
+</th>
+<th style="text-align:left;">
+Chance to Stun
+</th>
+<th style="text-align:right;">
+Stun Damage (HP)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+two-handed
+</td>
+<td style="text-align:right;">
+0.15
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+great_sword
+</td>
+<td style="text-align:left;">
+melee
+</td>
+<td style="text-align:right;">
+8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+two-handed
+</td>
+<td style="text-align:right;">
+0.15
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+staff
+</td>
+<td style="text-align:left;">
+melee
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+one-handed
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+shuriken
+</td>
+<td style="text-align:left;">
+ranged
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+one-handed
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+flail
+</td>
+<td style="text-align:left;">
+melee
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+one-handed
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+crossbow
+</td>
+<td style="text-align:left;">
+ranged
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+one-handed
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+Excalibur
+</td>
+<td style="text-align:left;">
+melee
+</td>
+<td style="text-align:right;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+one-handed
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+dagger
+</td>
+<td style="text-align:left;">
+melee
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<p>In this case, the full join table is the same as the left join table shown in the previous example. Similarly, the inner join table is the same as the right join table shown previously. However, this is true in this example due to the simplicity of the data set and does not hold true as a generalization for using these types of joins. It is expected that using inner join produces a smaller table than full join, since inner join looks only for matches and therefore excludes all NA entries. Further, we observe that the order of <em>x</em> and <em>y</em> does not affect the result of these joins, as expected.</p>
 </div>
 <div id="semi-and-anti-joins" class="section level3">
 <h3>Semi and Anti Joins</h3>
+<ul>
+<li><em>Semi_join(x,y)</em> returns rows of <em>x</em> that have a match in <em>y</em>, which is useful for determining what <em>will</em> be joined</li>
+<li>A semi join example is shown in the <strong>left</strong> table, below</li>
+<li><em>Anti_join(x,y)</em> returns rows of <em>x</em> that don’t have a match in <em>y</em> (effectively the opposite as semi-join)</li>
+<li>An anti join example is shown in the <strong>right</strong> table, below</li>
+</ul>
 <pre class="r"><code>sj &lt;- semi_join(medieval_weapons, stun_bonus, by = &quot;wielding&quot;) 
 aj &lt;- anti_join(medieval_weapons, stun_bonus, by = &quot;wielding&quot;) 
 kable(
@@ -1066,7 +1345,72 @@ one-handed
 </tr>
 </tbody>
 </table>
-<p><em>Activity 3: Explore the merge() and match() functions. Contrast and compare.</em></p>
+<p>In both tables above, we observe that only the columns from <em>x</em> are present. In the semi join table, we observe the same rows that were identified as matching rows when we used inner join. Thus, semi join can be used to predict which rows from a given data set will be joined. The anti join table shows all of the remaining rows which are not present in the semi join table. Semi and anti join are sensitive to the order in which they are fed the data sets, as illustrated by switching the variable order below.</p>
+<pre class="r"><code>sj2 &lt;- semi_join(stun_bonus, medieval_weapons,  by = &quot;wielding&quot;) 
+aj2 &lt;- anti_join(stun_bonus, medieval_weapons,  by = &quot;wielding&quot;) 
+kable(
+  list(sj2, aj2),
+  col.names = c(&quot;Weapon&quot;, &quot;Chance to Stun&quot;, &quot;Stun Damage (HP)&quot;))</code></pre>
+<table class="kable_wrapper">
+<tbody>
+<tr>
+<td>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Weapon
+</th>
+<th style="text-align:right;">
+Chance to Stun
+</th>
+<th style="text-align:right;">
+Stun Damage (HP)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+two-handed
+</td>
+<td style="text-align:right;">
+0.15
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Weapon
+</th>
+<th style="text-align:right;">
+Chance to Stun
+</th>
+<th style="text-align:right;">
+Stun Damage (HP)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Switching the order of the data set clearly affects the output of semi and anti joins. In both tables above, we observe that only the columns from the new <em>x</em> data set (previously the <em>y</em> data set) are present. Similarly to the previous example, the semi join table shows the same rows that were identified as matching rows when we used inner join. The anti join table shows all of the remaining rows, of which there are none, so there is no data present.</p>
+<p>Depending on the application, it could be useful to apply any of these join functions.</p>
+<p><em>Activity 3: Explore the merge() and match() functions. Contrast and compare.</em> * Merge combines two data frames by common columns or row names by coercion</p>
 <pre class="r"><code>merge_test &lt;- merge(medieval_weapons, stun_bonus, by = &quot;wielding&quot;) %&gt;% 
 kable(col.names = c(&quot;Weapon&quot;, &quot;Attack Type&quot;, &quot;Wielding Type&quot;, &quot;Damage (HP)&quot;, &quot;Chance to Stun&quot;, &quot;Stun Damage (HP)&quot;))
 merge_test</code></pre>
@@ -1136,9 +1480,18 @@ melee
 </tr>
 </tbody>
 </table>
+<p>The output of the merge function above gives the same result as inner join, in this example. Based on my preliminary research, join commands are generally preferred to merge commands, as they are more efficient.</p>
+<ul>
+<li>Match returns a vector of the positions of matches of its first argument in its second</li>
+</ul>
 <pre class="r"><code>(match_test &lt;- match(medieval_weapons, stun_bonus))</code></pre>
 <pre><code>## [1] NA NA NA NA</code></pre>
+<p>In this case, there are no matches, so there are no positions to indicate the the test returns NA. Based on preliminary research, it seems that %in% is typically preferred for returning a logical to test whether a match exists.</p>
 </div>
+</div>
+<div id="resources" class="section level2">
+<h2>Resources</h2>
+<p><a href="http://blog.espol.edu.ec/nemo/2013/12/23/merge-data-a-review-of-the-differences-between-merge-inner-join-left-join-right-join-full-join-cbind-and-rbind-when-used-data-table-objects-in-r/" class="uri">http://blog.espol.edu.ec/nemo/2013/12/23/merge-data-a-review-of-the-differences-between-merge-inner-join-left-join-right-join-full-join-cbind-and-rbind-when-used-data-table-objects-in-r/</a> <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/match.html" class="uri">https://stat.ethz.ch/R-manual/R-devel/library/base/html/match.html</a> <a href="https://github.com/rstudio/rmarkdown/issues/516" class="uri">https://github.com/rstudio/rmarkdown/issues/516</a></p>
 </div>
 </div>
 
