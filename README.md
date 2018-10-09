@@ -8,9 +8,9 @@ The homework file is located [here](https://github.com/STAT545-UBC-students/hw03
 
 |    **Item**                                                                | **Status** |
 |----------------------------------------------------------------------------|------------|
-| Do a data re-shaping prompt:                                                            |
+| **Do a data re-shaping prompt:**                                                        |
 |   *Use gather() and spread() for simple re-shaping*                        | :thumbsup: |
 |   *Do the thing that's easier/possible now that the data is re-shaped*     | :thumbsup: |
-| Do a join prompt:                                                                       |
+| **Do a join prompt:**                                                                   |
 |   *Perform a join() to combine two data sources into one*                  | :thumbsup: |
 |   *Optional: Explore the merge() or match() functions*                     | :thumbsup: |
