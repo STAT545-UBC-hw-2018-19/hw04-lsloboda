@@ -157,12 +157,14 @@ suppressPackageStartupMessages(library(kableExtra))</code></pre>
 </div>
 <div id="data-re-shaping-prompt" class="section level2">
 <h2>Data Re-shaping Prompt</h2>
-<p><em>Activity 2: Make a tibble with one row per year and columns for life expectancy for two or more countries. Use kable() to make the table look pretty. Scatterplot life expectancy for one country against that of another.</em></p>
+<div id="activity-2-make-a-tibble-with-one-row-per-year-and-columns-for-life-expectancy-for-two-or-more-countries.-use-kable-to-make-the-table-look-pretty.-scatterplot-life-expectancy-for-one-country-against-that-of-another." class="section level3">
+<h3><em>Activity 2: Make a tibble with one row per year and columns for life expectancy for two or more countries. Use kable() to make the table look pretty. Scatterplot life expectancy for one country against that of another.</em></h3>
+</div>
 <div id="method" class="section level3">
 <h3>Method</h3>
 <ul>
-<li>Reduce the data subset using select and group_by</li>
-<li>Spread the countries across the columns using spread</li>
+<li>Reduce the data subset using <em>select()</em> and <em>group_by()</em></li>
+<li>Spread the countries across the columns using <em>spread()</em></li>
 <li>Build a table and a scatterplot to compare life expectancy for two or more countries</li>
 </ul>
 </div>
@@ -392,7 +394,9 @@ Brazil
 </div>
 <div id="join-prompt-join-merge-look-up" class="section level2">
 <h2>Join Prompt (join, merge, look up)</h2>
-<p><em>Activity 2: Make your own cheatsheet; iterate between your data prep and your joining to make your explorations comprehensive and interesting. Demonstrate all the types of joins.</em></p>
+<div id="activity-2-make-your-own-cheatsheet-iterate-between-your-data-prep-and-your-joining-to-make-your-explorations-comprehensive-and-interesting.-demonstrate-all-the-types-of-joins." class="section level3">
+<h3><em>Activity 2: Make your own cheatsheet; iterate between your data prep and your joining to make your explorations comprehensive and interesting. Demonstrate all the types of joins.</em></h3>
+</div>
 <div id="method-1" class="section level3">
 <h3>Method</h3>
 <ul>
@@ -403,7 +407,7 @@ Brazil
 <div id="dataset-creation" class="section level3">
 <h3>Dataset Creation</h3>
 <ul>
-<li>We will create a dataset to experiment with joins</li>
+<li>We will create a dataset to experiment with joins:</li>
 </ul>
 <pre class="r"><code>medieval_weapons &lt;- &quot;
 name,        attack_type, wielding,       damage
@@ -1410,7 +1414,12 @@ Stun Damage (HP)
 </table>
 <p>Switching the order of the data set clearly affects the output of semi and anti joins. In both tables above, we observe that only the columns from the new <em>x</em> data set (previously the <em>y</em> data set) are present. Similarly to the previous example, the semi join table shows the same rows that were identified as matching rows when we used inner join. The anti join table shows all of the remaining rows, of which there are none, so there is no data present.</p>
 <p>Depending on the application, it could be useful to apply any of these join functions.</p>
-<p><em>Activity 3: Explore the merge() and match() functions. Contrast and compare.</em> * Merge combines two data frames by common columns or row names by coercion</p>
+</div>
+<div id="activity-3-explore-the-merge-and-match-functions.-contrast-and-compare." class="section level3">
+<h3><em>Activity 3: Explore the merge() and match() functions. Contrast and compare.</em></h3>
+<ul>
+<li><em>Merge()</em> combines two data frames by common columns or row names by coercion</li>
+</ul>
 <pre class="r"><code>merge_test &lt;- merge(medieval_weapons, stun_bonus, by = &quot;wielding&quot;) %&gt;% 
 kable(col.names = c(&quot;Weapon&quot;, &quot;Attack Type&quot;, &quot;Wielding Type&quot;, &quot;Damage (HP)&quot;, &quot;Chance to Stun&quot;, &quot;Stun Damage (HP)&quot;))
 merge_test</code></pre>
@@ -1482,11 +1491,11 @@ melee
 </table>
 <p>The output of the merge function above gives the same result as inner join, in this example. Based on my preliminary research, join commands are generally preferred to merge commands, as they are more efficient.</p>
 <ul>
-<li>Match returns a vector of the positions of matches of its first argument in its second</li>
+<li><em>Match()</em> returns a vector of the positions of matches of its first argument in its second</li>
 </ul>
 <pre class="r"><code>(match_test &lt;- match(medieval_weapons, stun_bonus))</code></pre>
 <pre><code>## [1] NA NA NA NA</code></pre>
-<p>In this case, there are no matches, so there are no positions to indicate the the test returns NA. Based on preliminary research, it seems that %in% is typically preferred for returning a logical to test whether a match exists.</p>
+<p>In this case, there are no matches, so there are no positions to indicate the the test returns NA. Based on preliminary research, it seems that <em>%in%</em> is typically preferred for returning a logical to test whether a match exists.</p>
 </div>
 </div>
 <div id="resources" class="section level2">

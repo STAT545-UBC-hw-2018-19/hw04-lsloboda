@@ -29,11 +29,11 @@ suppressPackageStartupMessages(library(kableExtra))
 * Everything looks as expected, so let's start exploring the data
 
 ## Data Re-shaping Prompt
-*Activity 2: Make a tibble with one row per year and columns for life expectancy for two or more countries. Use kable() to make the table look pretty. Scatterplot life expectancy for one country against that of another.*
+### *Activity 2: Make a tibble with one row per year and columns for life expectancy for two or more countries. Use kable() to make the table look pretty. Scatterplot life expectancy for one country against that of another.*
 
 ### Method
-* Reduce the data subset using select and group_by
-* Spread the countries across the columns using spread
+* Reduce the data subset using *select()* and *group_by()*
+* Spread the countries across the columns using *spread()*
 * Build a table and a scatterplot to compare life expectancy for two or more countries
 
 ### Table
@@ -51,7 +51,7 @@ q1_table %>%
   kable(col.names = c("Year", "Canada", "Germany", "Brazil")) %>% #Using kable enhances the output
     kable_styling()
 ```
-###Plot
+### Plot
 
 ```{r}
 q1_table %>%
@@ -75,14 +75,14 @@ The slope of the lines indicates the rate of increase of life expectancy. From t
 The table is useful for picking out exact values and comparing values on a year-by-year basis. However, it is easier to see the overall trend of increasing life expectancy for all countries in the multi-series plot. I didn't need to use the gather() function to create either the table or the plot, as it effectively does the opposite as the spread function. I'm curious to find out whether there is a more concise way to code multiple y-series on a plot (e.g. using a loop to auto-read in the table names and data rather than hard-coding).
 
 ## Join Prompt (join, merge, look up)
-*Activity 2: Make your own cheatsheet; iterate between your data prep and your joining to make your explorations comprehensive and interesting. Demonstrate all the types of joins.*
+### *Activity 2: Make your own cheatsheet; iterate between your data prep and your joining to make your explorations comprehensive and interesting. Demonstrate all the types of joins.*
 
 ### Method
 * Create two tables with some overlapping columns and rows
 * Explore different types of joins
 
 ### Dataset Creation
-* We will create a dataset to experiment with joins
+* We will create a dataset to experiment with joins:
 
 ```{r}
 medieval_weapons <- "
@@ -176,8 +176,8 @@ Switching the order of the data set clearly affects the output of semi and anti 
 
 Depending on the application, it could be useful to apply any of these join functions.
 
-*Activity 3: Explore the merge() and match() functions. Contrast and compare.*
-* Merge combines two data frames by common columns or row names by coercion
+### *Activity 3: Explore the merge() and match() functions. Contrast and compare.*
+* *Merge()* combines two data frames by common columns or row names by coercion
 
 ```{r}
 merge_test <- merge(medieval_weapons, stun_bonus, by = "wielding") %>% 
@@ -188,16 +188,16 @@ merge_test
 
 The output of the merge function above gives the same result as inner join, in this example. Based on my preliminary research, join commands are generally preferred to merge commands, as they are more efficient.
 
-* Match returns a vector of the positions of matches of its first argument in its second
+* *Match()* returns a vector of the positions of matches of its first argument in its second
 
 ```{r}
 (match_test <- match(medieval_weapons, stun_bonus))
 
 ```
 
-In this case, there are no matches, so there are no positions to indicate the the test returns NA. Based on preliminary research, it seems that %in% is typically preferred for returning a logical to test whether a match exists.
+In this case, there are no matches, so there are no positions to indicate the the test returns NA. Based on preliminary research, it seems that *%in%* is typically preferred for returning a logical to test whether a match exists.
 
-##Resources
+## Resources
 
 http://blog.espol.edu.ec/nemo/2013/12/23/merge-data-a-review-of-the-differences-between-merge-inner-join-left-join-right-join-full-join-cbind-and-rbind-when-used-data-table-objects-in-r/
 https://stat.ethz.ch/R-manual/R-devel/library/base/html/match.html
