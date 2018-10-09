@@ -232,10 +232,11 @@ lj <- left_join(medieval_weapons, stun_bonus, by = "wielding")
 rj <- right_join(medieval_weapons, stun_bonus, by = "wielding")
 kable(
   list(lj, rj),
-  col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun", "Stun Damage (HP)"))
+  col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun", "Stun Damage (HP)")) %>% 
+  kable_styling(font_size = 15)
 ```
 
-<table class="kable_wrapper">
+<table class="kable_wrapper table" style="font-size: 15px; margin-left: auto; margin-right: auto;">
 <tbody>
   <tr>
    <td> 
@@ -828,4 +829,5 @@ In this case, there are no matches, so there are no positions to indicate the th
 http://blog.espol.edu.ec/nemo/2013/12/23/merge-data-a-review-of-the-differences-between-merge-inner-join-left-join-right-join-full-join-cbind-and-rbind-when-used-data-table-objects-in-r/
 https://stat.ethz.ch/R-manual/R-devel/library/base/html/match.html
 https://github.com/rstudio/rmarkdown/issues/516
+https://haozhu233.github.io/kableExtra/awesome_table_in_html.html 
 

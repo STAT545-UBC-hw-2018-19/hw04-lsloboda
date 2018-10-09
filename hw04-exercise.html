@@ -435,8 +435,9 @@ stun_bonus &lt;- read_csv(stun_bonus, skip = 1)</code></pre>
 rj &lt;- right_join(medieval_weapons, stun_bonus, by = &quot;wielding&quot;)
 kable(
   list(lj, rj),
-  col.names = c(&quot;Weapon&quot;, &quot;Attack Type&quot;, &quot;Wielding Type&quot;, &quot;Damage (HP)&quot;, &quot;Chance to Stun&quot;, &quot;Stun Damage (HP)&quot;))</code></pre>
-<table class="kable_wrapper">
+  col.names = c(&quot;Weapon&quot;, &quot;Attack Type&quot;, &quot;Wielding Type&quot;, &quot;Damage (HP)&quot;, &quot;Chance to Stun&quot;, &quot;Stun Damage (HP)&quot;)) %&gt;% 
+  kable_styling(font_size = 15)</code></pre>
+<table class="kable_wrapper table" style="font-size: 15px; margin-left: auto; margin-right: auto;">
 <tbody>
 <tr>
 <td>
@@ -1496,7 +1497,7 @@ melee
 </div>
 <div id="resources" class="section level2">
 <h2>Resources</h2>
-<p><a href="http://blog.espol.edu.ec/nemo/2013/12/23/merge-data-a-review-of-the-differences-between-merge-inner-join-left-join-right-join-full-join-cbind-and-rbind-when-used-data-table-objects-in-r/" class="uri">http://blog.espol.edu.ec/nemo/2013/12/23/merge-data-a-review-of-the-differences-between-merge-inner-join-left-join-right-join-full-join-cbind-and-rbind-when-used-data-table-objects-in-r/</a> <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/match.html" class="uri">https://stat.ethz.ch/R-manual/R-devel/library/base/html/match.html</a> <a href="https://github.com/rstudio/rmarkdown/issues/516" class="uri">https://github.com/rstudio/rmarkdown/issues/516</a></p>
+<p><a href="http://blog.espol.edu.ec/nemo/2013/12/23/merge-data-a-review-of-the-differences-between-merge-inner-join-left-join-right-join-full-join-cbind-and-rbind-when-used-data-table-objects-in-r/" class="uri">http://blog.espol.edu.ec/nemo/2013/12/23/merge-data-a-review-of-the-differences-between-merge-inner-join-left-join-right-join-full-join-cbind-and-rbind-when-used-data-table-objects-in-r/</a> <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/match.html" class="uri">https://stat.ethz.ch/R-manual/R-devel/library/base/html/match.html</a> <a href="https://github.com/rstudio/rmarkdown/issues/516" class="uri">https://github.com/rstudio/rmarkdown/issues/516</a> <a href="https://haozhu233.github.io/kableExtra/awesome_table_in_html.html" class="uri">https://haozhu233.github.io/kableExtra/awesome_table_in_html.html</a></p>
 </div>
 </div>
 

@@ -117,7 +117,8 @@ lj <- left_join(medieval_weapons, stun_bonus, by = "wielding")
 rj <- right_join(medieval_weapons, stun_bonus, by = "wielding")
 kable(
   list(lj, rj),
-  col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun", "Stun Damage (HP)"))
+  col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun", "Stun Damage (HP)")) %>% 
+  kable_styling(font_size = 15)
 ```
 
 
@@ -184,7 +185,6 @@ Depending on the application, it could be useful to apply any of these join func
 merge_test <- merge(medieval_weapons, stun_bonus, by = "wielding") %>% 
 kable(col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun", "Stun Damage (HP)"))
 merge_test
-
 ```
 
 The output of the merge function above gives the same result as inner join, in this example. Based on my preliminary research, join commands are generally preferred to merge commands, as they are more efficient.
@@ -193,7 +193,6 @@ The output of the merge function above gives the same result as inner join, in t
 
 ```{r}
 (match_test <- match(medieval_weapons, stun_bonus))
-
 ```
 
 In this case, there are no matches, so there are no positions to indicate the the test returns NA. Based on preliminary research, it seems that *%in%* is typically preferred for returning a logical to test whether a match exists.
@@ -203,4 +202,5 @@ In this case, there are no matches, so there are no positions to indicate the th
 http://blog.espol.edu.ec/nemo/2013/12/23/merge-data-a-review-of-the-differences-between-merge-inner-join-left-join-right-join-full-join-cbind-and-rbind-when-used-data-table-objects-in-r/
 https://stat.ethz.ch/R-manual/R-devel/library/base/html/match.html
 https://github.com/rstudio/rmarkdown/issues/516
+https://haozhu233.github.io/kableExtra/awesome_table_in_html.html 
 
