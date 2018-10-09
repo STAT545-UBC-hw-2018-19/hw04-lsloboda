@@ -1,0 +1,34 @@
+---
+title: "hw04-exercise"
+output:
+  github_document
+---
+
+# Using dplyr, ggplot2 to explore data
+
+## Initialize the data
+
+* Load the gapminder, tidyverse and knitr libraries:
+
+```{r}
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(gapminder))
+suppressPackageStartupMessages(library(knitr))
+```
+
+
+* The knitr library is useful for improving the appearance of tables using the kable() command, described in more detail [here](https://www.rdocumentation.org/packages/knitr/versions/1.20/topics/kable).
+* We will take a quick look at the data to *sanity check* that the data and variables appear as we expect:
+
+```{r}
+(head(gapminder))
+```
+
+* Everything looks as expected, so let's start exploring the data
+
+## Task 1
+*Get the max and min GDP per capita for all continents.*
+
+### Method
+* Reduce the data subset using select and group_by
+* Find the minimum and maximum values
