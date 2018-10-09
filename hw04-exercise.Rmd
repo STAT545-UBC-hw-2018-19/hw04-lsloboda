@@ -1,7 +1,9 @@
 ---
 title: "hw04-exercise"
 output:
-  html_document
+   html_document:
+      self_contained: false
+      keep_md: true
 ---
 
 # Tidy data and joins
