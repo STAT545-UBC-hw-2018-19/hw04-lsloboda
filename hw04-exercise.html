@@ -138,7 +138,7 @@ suppressPackageStartupMessages(library(gapminder))
 suppressPackageStartupMessages(library(knitr))
 suppressPackageStartupMessages(library(kableExtra))</code></pre>
 <ul>
-<li>The kableExtra package gives new options for styling tables!</li>
+<li>The kableExtra package gives new options for styling tables, but since they are in HTML, we won’t get to see the effects in this .md file</li>
 <li>We will take a quick look at the data to <em>sanity check</em> that the data and variables appear as we expect:</li>
 </ul>
 <pre class="r"><code>(head(gapminder))</code></pre>
@@ -397,40 +397,29 @@ Brazil
 </ul>
 <pre class="r"><code>medieval_weapons &lt;- &quot;
 name,        attack_type, wielding,       damage
-shuriken,    ranged,      one-handed,     2
-flail,       melee,       one-handed,     4
-great_sword, melee,       two-handed,     8
-crossbow,    ranged,      one-handed,     2
-Excalibur,   melee,       one-handed,     6
-dagger,      melee,       one-handed,     3
-staff,       melee,       two-handed,     5
+shuriken,    ranged,      one-handed,     2       
+flail,       melee,       one-handed,     4        
+great_sword, melee,       two-handed,     8      
+crossbow,    ranged,      one-handed,     2        
+Excalibur,   melee,       one-handed,     6        
+dagger,      melee,       one-handed,     3       
+staff,       melee,       two-handed,     5       
 &quot;
 medieval_weapons &lt;- read_csv(medieval_weapons, skip = 1)
 
 stun_bonus &lt;- &quot;
-  wielding,   chance_to_stun
-  two-handed, 0.15
+  wielding,   chance_to_stun,   stun_damage
+  two-handed, 0.15,             10
 &quot;
 stun_bonus &lt;- read_csv(stun_bonus, skip = 1)</code></pre>
 </div>
 <div id="left-and-right-joins" class="section level3">
 <h3>Left and Right Joins</h3>
-<pre class="r"><code># lj &lt;- left_join(medieval_weapons, stun_bonus, by = &quot;wielding&quot;) %&gt;% 
-#   kable(col.names = c(&quot;Weapon&quot;, &quot;Attack Type&quot;, &quot;Wielding Type&quot;, &quot;Damage (HP)&quot;, &quot;Chance to Stun&quot;)) %&gt;% 
-#   kable_styling(full_width = FALSE, position = &quot;float_left&quot;)
-# 
-# rj &lt;- right_join(medieval_weapons, stun_bonus, by = &quot;wielding&quot;) %&gt;% 
-#   kable(col.names = c(&quot;Weapon&quot;, &quot;Attack Type&quot;, &quot;Wielding Type&quot;, &quot;Damage (HP)&quot;, &quot;Chance to Stun&quot;)) %&gt;% 
-#   kable_styling(full_width = FALSE, position = &quot;right&quot;)
-# 
-# lj
-# rj
-
-lj &lt;- left_join(medieval_weapons, stun_bonus, by = &quot;wielding&quot;)
+<pre class="r"><code>lj &lt;- left_join(medieval_weapons, stun_bonus, by = &quot;wielding&quot;)
 rj &lt;- right_join(medieval_weapons, stun_bonus, by = &quot;wielding&quot;)
 kable(
   list(lj, rj),
-  col.names = c(&quot;Weapon&quot;, &quot;Attack Type&quot;, &quot;Wielding Type&quot;, &quot;Damage (HP)&quot;, &quot;Chance to Stun&quot;))</code></pre>
+  col.names = c(&quot;Weapon&quot;, &quot;Attack Type&quot;, &quot;Wielding Type&quot;, &quot;Damage (HP)&quot;, &quot;Chance to Stun&quot;, &quot;Stun Damage (HP)&quot;))</code></pre>
 <table class="kable_wrapper">
 <tbody>
 <tr>
@@ -453,6 +442,9 @@ Damage (HP)
 <th style="text-align:right;">
 Chance to Stun
 </th>
+<th style="text-align:right;">
+Stun Damage (HP)
+</th>
 </tr>
 </thead>
 <tbody>
@@ -468,6 +460,9 @@ one-handed
 </td>
 <td style="text-align:right;">
 2
+</td>
+<td style="text-align:right;">
+NA
 </td>
 <td style="text-align:right;">
 NA
@@ -489,6 +484,9 @@ one-handed
 <td style="text-align:right;">
 NA
 </td>
+<td style="text-align:right;">
+NA
+</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -506,6 +504,9 @@ two-handed
 <td style="text-align:right;">
 0.15
 </td>
+<td style="text-align:right;">
+10
+</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -519,6 +520,9 @@ one-handed
 </td>
 <td style="text-align:right;">
 2
+</td>
+<td style="text-align:right;">
+NA
 </td>
 <td style="text-align:right;">
 NA
@@ -540,6 +544,9 @@ one-handed
 <td style="text-align:right;">
 NA
 </td>
+<td style="text-align:right;">
+NA
+</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -553,6 +560,9 @@ one-handed
 </td>
 <td style="text-align:right;">
 3
+</td>
+<td style="text-align:right;">
+NA
 </td>
 <td style="text-align:right;">
 NA
@@ -573,6 +583,9 @@ two-handed
 </td>
 <td style="text-align:right;">
 0.15
+</td>
+<td style="text-align:right;">
+10
 </td>
 </tr>
 </tbody>
@@ -597,6 +610,9 @@ Damage (HP)
 <th style="text-align:right;">
 Chance to Stun
 </th>
+<th style="text-align:right;">
+Stun Damage (HP)
+</th>
 </tr>
 </thead>
 <tbody>
@@ -616,6 +632,9 @@ two-handed
 <td style="text-align:right;">
 0.15
 </td>
+<td style="text-align:right;">
+10
+</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -632,6 +651,9 @@ two-handed
 </td>
 <td style="text-align:right;">
 0.15
+</td>
+<td style="text-align:right;">
+10
 </td>
 </tr>
 </tbody>
@@ -641,11 +663,16 @@ two-handed
 </tbody>
 </table>
 <p>On the left is a left join, on the right is a right join. ### Inner and Full Joins</p>
-<pre class="r"><code>ij &lt;- inner_join(medieval_weapons, stun_bonus, by = &quot;wielding&quot;) %&gt;% 
-  kable(col.names = c(&quot;Weapon&quot;, &quot;Attack Type&quot;, &quot;Wielding Type&quot;, &quot;Damage (HP)&quot;, &quot;Chance to Stun&quot;)) %&gt;% 
-  kable_styling(bootstrap_options = &quot;striped&quot;, full_width=F, position=&quot;float_left&quot;)
-ij</code></pre>
-<table class="table table-striped" style="width: auto !important; float: left; margin-right: 10px;">
+<pre class="r"><code>ij &lt;- inner_join(medieval_weapons, stun_bonus, by = &quot;wielding&quot;) 
+fj &lt;- full_join(medieval_weapons, stun_bonus, by = &quot;wielding&quot;) 
+kable(
+  list(ij, fj),
+  col.names = c(&quot;Weapon&quot;, &quot;Attack Type&quot;, &quot;Wielding Type&quot;, &quot;Damage (HP)&quot;, &quot;Chance to Stun&quot;, &quot;Stun Damage (HP)&quot;))</code></pre>
+<table class="kable_wrapper">
+<tbody>
+<tr>
+<td>
+<table>
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -662,6 +689,9 @@ Damage (HP)
 </th>
 <th style="text-align:right;">
 Chance to Stun
+</th>
+<th style="text-align:right;">
+Stun Damage (HP)
 </th>
 </tr>
 </thead>
@@ -682,6 +712,9 @@ two-handed
 <td style="text-align:right;">
 0.15
 </td>
+<td style="text-align:right;">
+10
+</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -699,15 +732,15 @@ two-handed
 <td style="text-align:right;">
 0.15
 </td>
+<td style="text-align:right;">
+10
+</td>
 </tr>
 </tbody>
 </table>
-<p>This is an inner join.</p>
-<pre class="r"><code>fj &lt;- full_join(medieval_weapons, stun_bonus, by = &quot;wielding&quot;) %&gt;% 
-  kable(col.names = c(&quot;Weapon&quot;, &quot;Attack Type&quot;, &quot;Wielding Type&quot;, &quot;Damage (HP)&quot;, &quot;Chance to Stun&quot;)) %&gt;% 
-  kable_styling(bootstrap_options = &quot;striped&quot;, full_width=F, position=&quot;float_right&quot;)
-fj</code></pre>
-<table class="table table-striped" style="width: auto !important; float: right; margin-left: 10px;">
+</td>
+<td>
+<table>
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -724,6 +757,9 @@ Damage (HP)
 </th>
 <th style="text-align:right;">
 Chance to Stun
+</th>
+<th style="text-align:right;">
+Stun Damage (HP)
 </th>
 </tr>
 </thead>
@@ -740,6 +776,9 @@ one-handed
 </td>
 <td style="text-align:right;">
 2
+</td>
+<td style="text-align:right;">
+NA
 </td>
 <td style="text-align:right;">
 NA
@@ -761,6 +800,9 @@ one-handed
 <td style="text-align:right;">
 NA
 </td>
+<td style="text-align:right;">
+NA
+</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -778,6 +820,9 @@ two-handed
 <td style="text-align:right;">
 0.15
 </td>
+<td style="text-align:right;">
+10
+</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -791,6 +836,9 @@ one-handed
 </td>
 <td style="text-align:right;">
 2
+</td>
+<td style="text-align:right;">
+NA
 </td>
 <td style="text-align:right;">
 NA
@@ -812,6 +860,9 @@ one-handed
 <td style="text-align:right;">
 NA
 </td>
+<td style="text-align:right;">
+NA
+</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -825,6 +876,9 @@ one-handed
 </td>
 <td style="text-align:right;">
 3
+</td>
+<td style="text-align:right;">
+NA
 </td>
 <td style="text-align:right;">
 NA
@@ -846,13 +900,263 @@ two-handed
 <td style="text-align:right;">
 0.15
 </td>
+<td style="text-align:right;">
+10
+</td>
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>#kable(
- # list(ij, fj),
-  #col.names = c(&quot;Weapon&quot;, &quot;Attack Type&quot;, &quot;Wielding Type&quot;, &quot;Damage (HP)&quot;, &quot;Chance to Stun&quot;))</code></pre>
-<p>This is a full join.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>sj &lt;- semi_join(medieval_weapons, stun_bonus, by = &quot;wielding&quot;) 
+aj &lt;- anti_join(medieval_weapons, stun_bonus, by = &quot;wielding&quot;) 
+kable(
+  list(ij, fj),
+  col.names = c(&quot;Weapon&quot;, &quot;Attack Type&quot;, &quot;Wielding Type&quot;, &quot;Damage (HP)&quot;, &quot;Chance to Stun&quot;, &quot;Stun Damage (HP)&quot;))</code></pre>
+<table class="kable_wrapper">
+<tbody>
+<tr>
+<td>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Weapon
+</th>
+<th style="text-align:left;">
+Attack Type
+</th>
+<th style="text-align:left;">
+Wielding Type
+</th>
+<th style="text-align:right;">
+Damage (HP)
+</th>
+<th style="text-align:right;">
+Chance to Stun
+</th>
+<th style="text-align:right;">
+Stun Damage (HP)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+great_sword
+</td>
+<td style="text-align:left;">
+melee
+</td>
+<td style="text-align:left;">
+two-handed
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+0.15
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+staff
+</td>
+<td style="text-align:left;">
+melee
+</td>
+<td style="text-align:left;">
+two-handed
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0.15
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Weapon
+</th>
+<th style="text-align:left;">
+Attack Type
+</th>
+<th style="text-align:left;">
+Wielding Type
+</th>
+<th style="text-align:right;">
+Damage (HP)
+</th>
+<th style="text-align:right;">
+Chance to Stun
+</th>
+<th style="text-align:right;">
+Stun Damage (HP)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+shuriken
+</td>
+<td style="text-align:left;">
+ranged
+</td>
+<td style="text-align:left;">
+one-handed
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+flail
+</td>
+<td style="text-align:left;">
+melee
+</td>
+<td style="text-align:left;">
+one-handed
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+great_sword
+</td>
+<td style="text-align:left;">
+melee
+</td>
+<td style="text-align:left;">
+two-handed
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+0.15
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+crossbow
+</td>
+<td style="text-align:left;">
+ranged
+</td>
+<td style="text-align:left;">
+one-handed
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Excalibur
+</td>
+<td style="text-align:left;">
+melee
+</td>
+<td style="text-align:left;">
+one-handed
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+dagger
+</td>
+<td style="text-align:left;">
+melee
+</td>
+<td style="text-align:left;">
+one-handed
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+staff
+</td>
+<td style="text-align:left;">
+melee
+</td>
+<td style="text-align:left;">
+two-handed
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0.15
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
 <p><em>Activity 3: Explore the merge() and match() functions. Contrast and compare.</em></p>
 </div>
 <div id="method-2" class="section level3">

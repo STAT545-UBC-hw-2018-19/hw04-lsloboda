@@ -19,7 +19,7 @@ suppressPackageStartupMessages(library(knitr))
 suppressPackageStartupMessages(library(kableExtra))
 ```
 
-* The kableExtra package gives new options for styling tables!
+* The kableExtra package gives new options for styling tables, but since they are in HTML, we won't get to see the effects in this .md file
 * We will take a quick look at the data to *sanity check* that the data and variables appear as we expect:
 
 ```{r}
@@ -82,19 +82,19 @@ I didn't end up using gather() (which effectively does the opposite as spread.
 ```{r}
 medieval_weapons <- "
 name,        attack_type, wielding,       damage
-shuriken,    ranged,      one-handed,     2
-flail,       melee,       one-handed,     4
-great_sword, melee,       two-handed,     8
-crossbow,    ranged,      one-handed,     2
-Excalibur,   melee,       one-handed,     6
-dagger,      melee,       one-handed,     3
-staff,       melee,       two-handed,     5
+shuriken,    ranged,      one-handed,     2       
+flail,       melee,       one-handed,     4        
+great_sword, melee,       two-handed,     8      
+crossbow,    ranged,      one-handed,     2        
+Excalibur,   melee,       one-handed,     6        
+dagger,      melee,       one-handed,     3       
+staff,       melee,       two-handed,     5       
 "
 medieval_weapons <- read_csv(medieval_weapons, skip = 1)
 
 stun_bonus <- "
-  wielding,   chance_to_stun
-  two-handed, 0.15
+  wielding,   chance_to_stun,   stun_damage
+  two-handed, 0.15,             10
 "
 stun_bonus <- read_csv(stun_bonus, skip = 1)
 
@@ -103,53 +103,34 @@ stun_bonus <- read_csv(stun_bonus, skip = 1)
 ### Left and Right Joins
 
 ```{r}
-# lj <- left_join(medieval_weapons, stun_bonus, by = "wielding") %>% 
-#   kable(col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun")) %>% 
-#   kable_styling(full_width = FALSE, position = "float_left")
-# 
-# rj <- right_join(medieval_weapons, stun_bonus, by = "wielding") %>% 
-#   kable(col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun")) %>% 
-#   kable_styling(full_width = FALSE, position = "right")
-# 
-# lj
-# rj
-
 lj <- left_join(medieval_weapons, stun_bonus, by = "wielding")
 rj <- right_join(medieval_weapons, stun_bonus, by = "wielding")
 kable(
   list(lj, rj),
-  col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun"))
+  col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun", "Stun Damage (HP)"))
 ```
 
 On the left is a left join, on the right is a right join.
 ### Inner and Full Joins
 
 ```{r}
-ij <- inner_join(medieval_weapons, stun_bonus, by = "wielding") %>% 
-  kable(col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun")) %>% 
-  kable_styling(bootstrap_options = "striped", full_width=F, position="float_left")
-ij
+ij <- inner_join(medieval_weapons, stun_bonus, by = "wielding") 
+fj <- full_join(medieval_weapons, stun_bonus, by = "wielding") 
+kable(
+  list(ij, fj),
+  col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun", "Stun Damage (HP)"))
 
 ```
-This is an inner join.
-
-
-
-
-
 
 ```{r}
-
-fj <- full_join(medieval_weapons, stun_bonus, by = "wielding") %>% 
-  kable(col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun")) %>% 
-  kable_styling(bootstrap_options = "striped", full_width=F, position="float_right")
-fj
-
-#kable(
- # list(ij, fj),
-  #col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun"))
+sj <- semi_join(medieval_weapons, stun_bonus, by = "wielding") 
+aj <- anti_join(medieval_weapons, stun_bonus, by = "wielding") 
+kable(
+  list(ij, fj),
+  col.names = c("Weapon", "Attack Type", "Wielding Type", "Damage (HP)", "Chance to Stun", "Stun Damage (HP)"))
 ```
-This is a full join.
+
+
 
 *Activity 3: Explore the merge() and match() functions. Contrast and compare.*
 
