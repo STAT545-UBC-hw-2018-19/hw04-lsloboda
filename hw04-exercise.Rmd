@@ -4,7 +4,7 @@ output:
   github_document
 ---
 
-# Using dplyr, ggplot2 to explore data
+# Tidy data and joins
 
 ## Initialize the data
 
@@ -29,7 +29,38 @@ suppressPackageStartupMessages(library(knitr))
 
 ### Method
 * Reduce the data subset using select and group_by
-* Find the minimum and maximum values
+* Spread the countries across the columns
+* Build a table and a scatterplot
+
+```{r}
+q1_table <- gapminder %>% #Create a new variable for the tibble
+  select(year, country, lifeExp) %>% #Reduce the data set
+    group_by(year) %>% 
+      spread(key = "country", value = "lifeExp") %>% #Spread countries across columns
+        select("Canada", "Germany", "Brazil")# %>% #Select only two countries to display
+        #summarize()
+
+q1_table %>% 
+  kable(col.names = c("Year", "Canada", "Germany", "Brazil"))
+
+#Check that the data is a tibble
+
+```
+#Plot
+
+```{r}
+q1_table %>%
+  ggplot(aes(x = year, y = value, color = variable)) +
+  geom_point(aes(y = Canada, col = "Canada"), size=5) +
+  geom_point(aes(y = Germany, col = "Germany"), size=5) +
+  geom_point(aes(y = Brazil, col = "Brazil"), size=5) +
+  #Add labels
+  labs(title = "Life expectancy from 1952-2007 (Canada, Germany, Brazil)",
+    x = "Year", y = "Life Expectancy",
+    color = "Countries\n")
+
+```
+
 
 ## Join Prompt (join, merge, look up)
 *Activity 2: Make your own cheatsheet; iterate between your data prep and your joining to make your explorations comprehensive and interesting. Demonstrate all the types of joins.*
@@ -38,8 +69,14 @@ suppressPackageStartupMessages(library(knitr))
 * Reduce the data subset using select and group_by
 * Find the minimum and maximum values
 
+```{r}
+
+```
+
+
 *Activity 3: Explore the merge() and match() functions. Contrast and compare.*
 
 ### Method
 * Reduce the data subset using se
+
 
