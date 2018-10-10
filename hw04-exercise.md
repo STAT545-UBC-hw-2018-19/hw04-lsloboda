@@ -813,7 +813,7 @@ merge_test
 </tbody>
 </table>
 
-The output of the merge function above gives the same result as inner join, in this example. Based on my preliminary research, join commands are generally preferred to merge commands, as they are more efficient.
+The output of the merge function above gives the same result as inner join, in this example. Based on preliminary research, join commands are generally preferred to merge commands, as they are more efficient.
 
 * *Match()* returns a vector of the positions of matches of its first argument in its second
 
@@ -826,7 +826,7 @@ The output of the merge function above gives the same result as inner join, in t
 ## [1] NA NA NA NA
 ```
 
-In this case, there are no matches, so there are no positions to indicate the the test returns NA. Based on preliminary research, it seems that *%in%* is typically preferred for returning a logical to test whether a match exists.
+In this case, there are no matches, so there are no positions to indicate and the test returns NA. Based on preliminary research, it seems that *%in%* is typically preferred for returning a logical to test whether a match exists.
 
 ## Resources
 
